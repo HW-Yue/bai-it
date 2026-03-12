@@ -98,7 +98,7 @@
       loadSection.style.cssText = "padding:16px;margin-bottom:16px";
       const loadTitle = document.createElement("div");
       loadTitle.style.cssText = "margin-bottom:12px;font-weight:600;color:rgba(255,255,255,0.9)";
-      loadTitle.textContent = "选择要加载的词库（勾选后参与标注）";
+      loadTitle.textContent = "选择要加载的词库";
       loadSection.appendChild(loadTitle);
       libs.forEach((lib) => {
         const label = document.createElement("label");
@@ -108,13 +108,13 @@
         cb.checked = loadedIds.includes(lib.id);
         cb.dataset.libId = lib.id;
         const span = document.createElement("span");
-        span.textContent = lib.name + " (" + lib.id.slice(0, 8) + ")";
+        span.textContent = lib.name;
         label.appendChild(cb);
         label.appendChild(span);
         loadSection.appendChild(label);
       });
       const saveLoadBtn = document.createElement("button");
-      saveLoadBtn.textContent = "保存加载设置";
+      saveLoadBtn.textContent = "加载";
       saveLoadBtn.style.cssText = "margin-top:12px;padding:8px 16px;border-radius:6px;border:none;background:#ef4444;color:#fff;cursor:pointer";
       saveLoadBtn.onclick = async () => {
         const ids = [...loadSection.querySelectorAll("input[type=checkbox]:checked")].map((c) => c.dataset.libId);
@@ -235,6 +235,62 @@
       exportSection.appendChild(exportSelect);
       exportSection.appendChild(exportBtn);
       wrap.appendChild(exportSection);
+
+      const deleteSection = document.createElement("div");
+      deleteSection.className = "glass";
+      deleteSection.style.cssText = "padding:16px;margin-bottom:16px";
+      const deleteTitle = document.createElement("div");
+      deleteTitle.style.cssText = "margin-bottom:12px;font-weight:600;color:rgba(248,113,113,0.9)";
+      deleteTitle.textContent = "删除词库（不可恢复）";
+      deleteSection.appendChild(deleteTitle);
+      const deleteSelect = document.createElement("select");
+      deleteSelect.style.cssText = "padding:8px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.2);color:#fff;margin-right:8px";
+      libs.forEach((lib) => {
+        const opt = document.createElement("option");
+        opt.value = lib.id;
+        opt.textContent = lib.name;
+        deleteSelect.appendChild(opt);
+      });
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "删除该词库";
+      deleteBtn.style.cssText = "padding:8px 16px;border-radius:6px;border:none;background:#7f1d1d;color:#fff;cursor:pointer";
+      deleteBtn.onclick = async () => {
+        const libId = deleteSelect.value;
+        if (!libId) {
+          toast("请选择要删除的词库");
+          return;
+        }
+        const libName = libs.find((l) => l.id === libId)?.name || "词库";
+        if (!confirm(`确定要删除词库「${libName}」吗？此操作不可恢复。`)) return;
+        try {
+          const local = await chrome.storage.local.get({
+            vocab_libs: [],
+            vocab_loaded_ids: [],
+          });
+          const nextLibs = Array.isArray(local.vocab_libs)
+            ? local.vocab_libs.filter((l) => l.id !== libId)
+            : [];
+          const nextLoadedIds = Array.isArray(local.vocab_loaded_ids)
+            ? local.vocab_loaded_ids.filter((id) => id !== libId)
+            : [];
+          await chrome.storage.local.set({
+            vocab_libs: nextLibs,
+            vocab_loaded_ids: nextLoadedIds,
+          });
+          await chrome.storage.local.remove(`vocab_lib_${libId}`);
+          toast("已删除词库，正在刷新插件…");
+          setTimeout(() => {
+            try {
+              chrome.runtime.reload();
+            } catch (e) {}
+          }, 200);
+        } catch (e) {
+          toast("删除失败");
+        }
+      };
+      deleteSection.appendChild(deleteSelect);
+      deleteSection.appendChild(deleteBtn);
+      wrap.appendChild(deleteSection);
     });
 
     app.textContent = "";
