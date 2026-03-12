@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>掰it</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Syne:wght@400;500;700;800&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap&text=掰" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 340px;
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      background: #09090b;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    /* ===== Header ===== */
+    .header {
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .logo {
+      display: flex;
+      align-items: baseline;
+    }
+
+    .logo .zh {
+      font-family: 'ZCOOL KuaiLe', sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      color: #fafafa;
+      line-height: 1;
+    }
+
+    .logo .en {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      color: #fafafa;
+      line-height: 1;
+      margin-left: 1px;
+    }
+
+    .site-name {
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+      font-weight: 500;
+    }
+
+    /* ===== Big Action Button ===== */
+    .action-area {
+      padding: 8px 16px 6px;
+    }
+
+    .action-btn {
+      width: 100%;
+      height: 40px;
+      border-radius: 6px;
+      border: none;
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s;
+      letter-spacing: 0.3px;
+    }
+
+    .action-btn.is-on {
+      background: #ef4444;
+      color: #fff;
+      box-shadow: 0 0 20px rgba(239,68,68,0.25), 0 0 40px rgba(239,68,68,0.08);
+    }
+
+    .action-btn.is-on:hover {
+      background: #f87171;
+      box-shadow: 0 0 28px rgba(239,68,68,0.35), 0 0 56px rgba(239,68,68,0.12);
+    }
+
+    .action-btn.is-off {
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .action-btn.is-off:hover {
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* ===== Site toggle row ===== */
+    .site-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .site-row-label {
+      font-size: 13px;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .site-row-label .domain {
+      color: rgba(255,255,255,0.6);
+      font-weight: 500;
+    }
+
+    /* Toggle switch */
+    .toggle-sm {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .toggle-sm input { display: none; }
+
+    .toggle-sm .t-track {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.08);
+      border-radius: 11px;
+      transition: background 0.3s;
+    }
+
+    .toggle-sm input:checked + .t-track {
+      background: #ef4444;
+    }
+
+    .toggle-sm .t-thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .toggle-sm input:checked ~ .t-thumb {
+      transform: translateX(18px);
+    }
+
+    /* ===== Content ===== */
+    .content {
+      padding: 0 16px 12px;
+      transition: opacity 0.3s ease;
+    }
+
+    .content.disabled {
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    .section {
+      padding-top: 12px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: #ef4444;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    /* ===== Slider ===== */
+    .slider-row { margin-bottom: 14px; }
+
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .slider-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .slider-label.center {
+      color: rgba(255,255,255,0.5);
+      font-weight: 500;
+    }
+
+    .slider-track-container {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      cursor: pointer;
+      touch-action: none;
+    }
+
+    .slider-track {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slider-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: #ef4444;
+      width: 50%;
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slider-thumb {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #ef4444;
+      box-shadow: 0 0 8px rgba(239,68,68,0.3);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .no-transition .slider-fill,
+    .no-transition .slider-thumb,
+    .no-transition .seg-pill {
+      transition: none !important;
+    }
+
+    .slider-hint {
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      margin-top: 4px;
+      text-align: center;
+    }
+
+    /* ===== Segmented Control ===== */
+    .seg-control {
+      display: flex;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 3px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .seg-pill {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: calc((100% - 6px) / 3);
+      height: calc(100% - 6px);
+      border-radius: 8px;
+      background: rgba(239,68,68,0.12);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 0;
+    }
+
+    .seg-btn {
+      flex: 1;
+      padding: 8px 0;
+      border: none;
+      background: transparent;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.3);
+      cursor: pointer;
+      border-radius: 8px;
+      transition: color 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .seg-btn.active {
+      color: #fca5a5;
+      font-weight: 600;
+    }
+
+    .seg-btn:hover:not(.active) {
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ===== Mode description ===== */
+    .mode-desc {
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+      margin-bottom: 8px;
+      transition: all 0.2s ease;
+    }
+
+    /* ===== Display Preview ===== */
+    .display-preview {
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 14px 16px;
+      height: 106px;
+      font-size: 13px;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.5);
+      transition: all 0.2s ease;
+    }
+
+    .display-preview .line { display: block; }
+
+    /* Structure (详细) */
+    .display-preview.mode-structure .line-main { color: rgba(255,255,255,0.75); }
+    .display-preview.mode-structure .line-sub1 { padding-left: 1.2em; color: rgba(255,255,255,0.28); }
+    .display-preview.mode-structure .line-sub2 { padding-left: 2.4em; color: rgba(255,255,255,0.18); }
+
+    /* Lines (简洁) */
+    .display-preview.mode-lines .line { color: rgba(255,255,255,0.5); }
+
+    /* Light (轻微) */
+    .display-preview.mode-light .line { display: inline; }
+    .display-preview.mode-light .line-main { color: rgba(255,255,255,0.75); font-weight: 500; }
+    .display-preview.mode-light .line-sub { color: rgba(255,255,255,0.2); }
+    .display-preview.mode-light .dot { color: rgba(255,255,255,0.15); margin: 0 3px; }
+
+    /* ===== Display label ===== */
+    .display-label {
+      margin-bottom: 6px;
+    }
+
+    /* ===== Vocab Level Selector ===== */
+    .vocab-levels {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+
+    .vocab-btn {
+      flex: 1;
+      padding: 6px 0;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: transparent;
+      border-radius: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .vocab-btn:hover:not(.active) {
+      color: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .vocab-btn.active {
+      color: #fca5a5;
+      background: rgba(239,68,68,0.12);
+      border-color: rgba(239,68,68,0.2);
+      font-weight: 600;
+    }
+
+    .vocab-hint {
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+      text-align: center;
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      padding: 8px 16px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      text-align: center;
+    }
+
+    .footer a {
+      font-size: 12px;
+      color: rgba(255,255,255,0.2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer a:hover { color: #fca5a5; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      <span class="zh">掰</span><span class="en">it</span>
+    </div>
+    <span class="site-name" id="site-name">—</span>
+  </div>
+
+  <!-- Big action button -->
+  <div class="action-area">
+    <button class="action-btn is-on" id="action-btn">
+      <span id="action-text">显示原文</span>
+    </button>
+  </div>
+
+  <!-- Site-level toggle -->
+  <div class="site-row">
+    <span class="site-row-label">总是掰 <span class="domain" id="site-domain">—</span></span>
+    <label class="toggle-sm">
+      <input type="checkbox" id="site-toggle" checked>
+      <div class="t-track"></div>
+      <div class="t-thumb"></div>
+    </label>
+  </div>
+
+  <!-- Settings content -->
+  <div class="content" id="content">
+    <div class="section">
+      <div class="section-title">掰句设置</div>
+
+      <!-- Intensity slider -->
+      <div class="slider-row">
+        <div class="slider-labels">
+          <span class="slider-label">少掰</span>
+          <span class="slider-label center">掰多少</span>
+          <span class="slider-label">多掰</span>
+        </div>
+        <div class="slider-track-container no-transition" id="assist-slider">
+          <div class="slider-track">
+            <div class="slider-fill" id="slider-fill"></div>
+          </div>
+          <div class="slider-thumb" id="slider-thumb"></div>
+        </div>
+        <div class="slider-hint" id="assist-hint">复杂句自动掰，简单句不打扰</div>
+      </div>
+
+      <!-- Display mode: segmented control + preview -->
+      <div class="display-label">
+        <span class="slider-label center">掰完怎么显示</span>
+      </div>
+
+      <div class="seg-control no-transition" id="seg-control">
+        <div class="seg-pill" id="seg-pill"></div>
+        <button class="seg-btn active" data-mode="structure">详细</button>
+        <button class="seg-btn" data-mode="lines">简洁</button>
+        <button class="seg-btn" data-mode="light">轻微</button>
+      </div>
+
+      <div class="mode-desc" id="mode-desc">掰成段，缩进显示主从关系</div>
+
+      <!-- Shared preview area -->
+      <div class="display-preview mode-structure" id="preview"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">标注词汇</div>
+
+      <div class="vocab-levels" id="vocab-levels">
+        <button class="vocab-btn" data-level="zk">初中</button>
+        <button class="vocab-btn active" data-level="gz">高中</button>
+        <button class="vocab-btn" data-level="gk">高考</button>
+        <button class="vocab-btn" data-level="cet4">四级</button>
+        <button class="vocab-btn" data-level="cet6">六级</button>
+        <button class="vocab-btn" data-level="ky">考研</button>
+        <button class="vocab-btn" data-level="adv">进阶</button>
+      </div>
+      <div class="vocab-hint" id="vocab-hint">高中以上词汇都标注</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <a href="#" id="link-options">更多设置 →</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
