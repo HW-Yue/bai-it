@@ -1,0 +1,16 @@
+{
+  "name": "bai-it-v0.3.1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "background.js",
+  "scripts": {
+    "test": "node tests/english-page.test.mjs && node tests/claw.test.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "jsdom": "^28.1.0"
+  }
+}

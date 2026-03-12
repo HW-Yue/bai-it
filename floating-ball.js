@@ -34,34 +34,46 @@
       .fb-wrapper {
         position: fixed;
         top: 50%;
-        right: 20px;
+        right: 8px;
         transform: translateY(-50%);
         z-index: 2147483647;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       }
 
       .fb-ball {
-        width: 48px;
-        height: 48px;
+        position: relative;
+        width: 32px;
+        height: 32px;
         border-radius: 999px;
-        background: #2563eb;
-        color: #ffffff;
+        background: #f5c6d0;
+        color: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.35);
+        box-shadow: 0 2px 12px rgba(200, 120, 140, 0.25);
         cursor: pointer;
         user-select: none;
         font-weight: 700;
-        font-size: 18px;
+        font-size: 16px;
         letter-spacing: 0.5px;
         transition: background 0.18s ease, transform 0.15s ease, box-shadow 0.15s ease;
       }
-
+      .fb-ball .fb-ball-star {
+        position: absolute;
+        top: 4px;
+        left: 5px;
+        font-size: 7px;
+        opacity: 0.95;
+        line-height: 1;
+      }
+      .fb-ball .fb-ball-char {
+        font-size: 13px;
+        margin-top: 0;
+      }
       .fb-ball:hover {
-        background: #1d4ed8;
-        transform: translateY(-2px);
-        box-shadow: 0 12px 32px rgba(15, 23, 42, 0.45);
+        background: #f0b4c2;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 16px rgba(200, 120, 140, 0.35);
       }
 
       .fb-panel {
@@ -227,7 +239,14 @@
 
     const ball = document.createElement("div");
     ball.className = "fb-ball";
-    ball.textContent = "词";
+    const ballStar = document.createElement("span");
+    ballStar.className = "fb-ball-star";
+    ballStar.textContent = "✦";
+    const ballChar = document.createElement("span");
+    ballChar.className = "fb-ball-char";
+    ballChar.textContent = "词";
+    ball.appendChild(ballStar);
+    ball.appendChild(ballChar);
 
     const panel = document.createElement("div");
     panel.className = "fb-panel";
@@ -465,33 +484,46 @@
       .fb-wrapper {
         position: fixed;
         top: 50%;
-        right: 20px;
+        right: 8px;
         transform: translateY(-50%);
         z-index: 2147483647;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       }
 
       .fb-ball {
-        width: 48px;
-        height: 48px;
+        position: relative;
+        width: 32px;
+        height: 32px;
         border-radius: 999px;
-        background: #2563eb;
+        background: #f5c6d0;
         color: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.35);
+        box-shadow: 0 2px 12px rgba(200, 120, 140, 0.25);
         cursor: pointer;
         user-select: none;
         font-weight: 700;
-        font-size: 18px;
+        font-size: 16px;
         letter-spacing: 0.5px;
         transition: background 0.18s ease, transform 0.15s ease, box-shadow 0.15s ease;
       }
+      .fb-ball .fb-ball-star {
+        position: absolute;
+        top: 4px;
+        left: 5px;
+        font-size: 7px;
+        opacity: 0.95;
+        line-height: 1;
+      }
+      .fb-ball .fb-ball-char {
+        font-size: 13px;
+        margin-top: 0;
+      }
       .fb-ball:hover {
-        background: #1d4ed8;
-        transform: translateY(-2px);
-        box-shadow: 0 12px 32px rgba(15, 23, 42, 0.45);
+        background: #f0b4c2;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 16px rgba(200, 120, 140, 0.35);
       }
 
       /* 卡片：磨砂玻璃 + 12px 圆角 + shadow-xl */
@@ -658,7 +690,14 @@
 
     const ball = document.createElement("div");
     ball.className = "fb-ball";
-    ball.textContent = "词";
+    const ballStar = document.createElement("span");
+    ballStar.className = "fb-ball-star";
+    ballStar.textContent = "✦";
+    const ballChar = document.createElement("span");
+    ballChar.className = "fb-ball-char";
+    ballChar.textContent = "词";
+    ball.appendChild(ballStar);
+    ball.appendChild(ballChar);
 
     const panel = document.createElement("div");
     panel.className = "fb-panel";
