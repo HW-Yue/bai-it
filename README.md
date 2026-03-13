@@ -42,6 +42,18 @@
   - 在新电脑或新浏览器上，通过导入文件即可完整恢复。  
   - 未来可以和他人共享词库，逐步形成各个领域的词库生态。
 
+#### 💡 「添加新词」悬浮框预览
+
+<p align="center">
+  <img src="./assets/add-word-modal.png" alt="bai-it 添加新词悬浮框" width="420" />
+</p>
+
+#### 📚 词库管理页面
+
+<p align="center">
+  <img src="./assets/vocab-management.png" alt="bai-it 词库管理" width="520" />
+</p>
+
 ---
 
 ### 📦 安装方式
