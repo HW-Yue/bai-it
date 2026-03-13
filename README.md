@@ -54,6 +54,12 @@
   <img src="./assets/vocab-management.png" alt="bai-it 词库管理" width="520" />
 </p>
 
+#### 🧩 实际使用效果示例
+
+<p align="center">
+  <img src="./assets/usage-tooltip.png" alt="bai-it 在文档页面中的划词提示示例" width="520" />
+</p>
+
 ---
 
 ### 📁 项目结构
