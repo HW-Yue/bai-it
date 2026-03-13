@@ -13,7 +13,7 @@ function loadFile(relPath) {
 }
 
 async function main() {
-  const html = loadFile("english-page.html");
+  const html = loadFile("tests/fixtures/english-page.html");
 
   const dom = new JSDOM(html, {
     url: "https://example.com/docs/intro",
@@ -111,7 +111,7 @@ async function main() {
     },
   };
 
-  const contentScript = loadFile("content.js");
+  const contentScript = loadFile("src/content.js");
   window.eval(contentScript);
 
   // 等待初始化逻辑跑完

@@ -56,6 +56,26 @@
 
 ---
 
+### 📁 项目结构
+
+```
+├── README.md
+├── manifest.json          # 扩展配置
+├── package.json
+├── src/                   # 扩展核心代码
+│   ├── background.js      # 后台 / Service Worker
+│   ├── content.js         # 注入页面的脚本
+│   ├── floating-ball.js   # 悬浮球
+│   ├── options.html / options.js / options.css  # 词库管理页
+│   ├── popup.html / popup.js                     # 弹出层
+│   ├── vocab-lib.js / vocab-worker.js / word-data.js  # 词库逻辑与数据
+│   └── icons/             # 扩展图标
+├── assets/                # 文档用图（如 README 截图）
+└── tests/                 # 测试与 fixtures
+```
+
+---
+
 ### 📦 安装方式
 
 > 目前以 Chrome / Edge 浏览器为例，其他支持 `Chrome Extension` 的浏览器步骤类似。

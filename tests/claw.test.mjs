@@ -98,7 +98,7 @@ async function main() {
     },
   };
 
-  const contentScript = loadFile("content.js");
+  const contentScript = loadFile("src/content.js");
   window.eval(contentScript);
 
   await new Promise((r) => setTimeout(r, 50));
