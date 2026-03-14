@@ -52,18 +52,7 @@
   position: relative;
 }
 .enlearn-trigger {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-  width: 16px;
-  height: 16px;
-  margin-left: 6px;
-  border: none;
-  background: transparent;
-  color: rgba(37, 99, 235, 0.5);
-  cursor: pointer;
-  padding: 0;
+  display: none !important;
 }
 .enlearn-chunked {
   display: block !important;
@@ -392,7 +381,6 @@ body.enlearn-paused .enlearn-original-hidden { display: block !important; }
         element.parentNode?.insertBefore(clone, element.nextSibling);
       } else {
         markWordsInRoot(element, wordInfos);
-        addTrigger(element);
       }
 
       processedElements.add(element);
